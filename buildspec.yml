@@ -12,21 +12,20 @@ phases:
     commands:
       - echo Entered the pre_build phase...
       - $(aws ecr get-login --no-include-email --region us-east-1)
-      - 
+      - export TAG=$(git log -1 --pretty=%H)
     finally:
       - echo Pre Build phase done
   build:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - docker build -t codebuild-rails-app .
+      - docker build -t codebuild-rails-app:$TAG .
       - docker run --rm codebuild-rails-app bundle exec rspec
     finally:
       - echo Build and testing phase done
 
   post_build:
     commands:
-      - export TAG=$(git log -1 --pretty=%H)
       - docker tag codebuild-rails-app:$TAG 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$TAG
       - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:latest
     finally:
