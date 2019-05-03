@@ -1,0 +1,5 @@
+{
+  "name": "codebuild-rails-app",
+  "private": true,
+  "dependencies": {}
+}
