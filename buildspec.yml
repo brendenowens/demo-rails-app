@@ -20,7 +20,7 @@ phases:
       - echo Entered the build phase...
       - echo Build started on `date`
       - docker build -t codebuild-rails-app:$TAG .
-      - docker run --rm codebuild-rails-app bundle exec rspec
+      - docker run --rm codebuild-rails-app:$TAG bundle exec rspec
     finally:
       - echo Build and testing phase done
 
