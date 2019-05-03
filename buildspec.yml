@@ -27,7 +27,7 @@ phases:
   post_build:
     commands:
       - docker tag codebuild-rails-app:$TAG 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$TAG
-      - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:latest
+      - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$TAG
     finally:
       - echo Post Build phase done
 
