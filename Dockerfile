@@ -14,6 +14,7 @@ WORKDIR /app
 ADD . /app
 
 RUN gem install bundler && bundle install
+RUN bundle exec rake db:create db:migrate
 
 # Expose port 3000 to the Docker host, so we can access it 
 # from the outside.
