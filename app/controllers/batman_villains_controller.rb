@@ -4,6 +4,7 @@ class BatmanVillainsController < ApplicationController
     render json: @villain, status: :created
   end
 
+  #list all villains
   def index
     @villains = BatmanVillain.all 
     render json: @villains, status: 200
