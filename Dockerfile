@@ -1,4 +1,4 @@
-FROM ruby:2.5.5-alpine3.9
+FROM ruby:2.5.1
 LABEL version="1.0.0"
 LABEL maintainer="Bowens3@nd.edu"
 
@@ -12,10 +12,10 @@ RUN apk update && apk install -y \
 WORKDIR /app
 ADD . /app
 
-RUN gem install bundler && bundle install && bundle exec rake db:create db:migrate
+RUN gem install bundler && bundle install
 
 # Expose port 3000 to the Docker host, so we can access it 
 # from the outside.
 EXPOSE 3000
 
-CMD ["rails","s", "-b", "0.0.0.0"]
+CMD ["rails","s -b 0.0.0.0"]
