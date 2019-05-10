@@ -5,8 +5,7 @@ LABEL maintainer="Bowens3@nd.edu"
 # Install apt based dependencies required to run Rails as 
 # well as RubyGems. As the Ruby image itself is based on a 
 # Debian image, we use apt-get to install those.
-RUN apt-get update && apt-get install -y \ 
-  build-essential \ 
+RUN apk update && apk install -y \ 
   nodejs && \
   mkdir -p /app 
 
