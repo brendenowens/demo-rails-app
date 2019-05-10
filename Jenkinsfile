@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh "$(aws ecr get-login --no-include-email --region us-east-1)"
+                sh "aws ecr get-login --no-include-email --region us-east-1"
                 sh "docker build --force-rm -t codebuild-rails-app:${env.GIT_COMMIT} ."
             }
         }
