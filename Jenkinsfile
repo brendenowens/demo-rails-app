@@ -1,26 +1,30 @@
 pipeline {
     agent any
+    environment {
+        CONTAINER_NAME = "codebuild-rails-app"
+        ECR_REPO = "209773529123.dkr.ecr.us-east-1.amazonaws.com"
+    }
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
                 sh "\$(aws ecr get-login --no-include-email --region us-east-1)"
-                sh "docker build --force-rm -t codebuild-rails-app:${env.GIT_COMMIT} ."
+                sh "docker build --force-rm -t ${CONTAINER_NAME}:${env.GIT_COMMIT} ."
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh "docker run --rm codebuild-rails-app:${env.GIT_COMMIT} bundle exec rspec"
+                sh "docker run --rm ${CONTAINER_NAME}:${env.GIT_COMMIT} bundle exec rspec"
             }
         }
         stage('ECR Deploy') {
             steps {
                 echo 'ECR Image Deploying....'
-                sh "docker tag codebuild-rails-app:${env.GIT_COMMIT} 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:${env.GIT_COMMIT}"
-                sh "docker tag codebuild-rails-app:${env.GIT_COMMIT} 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:latest"
-                sh "docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:latest && docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:${env.GIT_COMMIT}"
-                sh "docker rmi codebuild-rails-app:${env.GIT_COMMIT}"
+                sh "docker tag ${CONTAINER_NAME}:${env.GIT_COMMIT} ${ECR_REPO}/${CONTAINER_NAME}:${env.GIT_COMMIT}"
+                sh "docker tag ${CONTAINER_NAME}:${env.GIT_COMMIT} ${ECR_REPO}/${CONTAINER_NAME}:latest"
+                sh "docker push ${ECR_REPO}/${CONTAINER_NAME}:latest && docker push ${ECR_REPO}/${CONTAINER_NAME}:${env.GIT_COMMIT}"
+                sh "docker rmi ${CONTAINER_NAME}:${env.GIT_COMMIT}"
             }
         }
         stage('ECS Deployment') {
