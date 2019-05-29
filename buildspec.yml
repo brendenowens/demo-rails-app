@@ -12,7 +12,7 @@ phases:
     commands:
       - echo Entered the pre_build phase...
       - $(aws ecr get-login --no-include-email --region us-east-1)
-      - export TAG=$(git log -1 --pretty=%H)
+      - export TAG=$(date "+%m%d%y%H%M")
     finally:
       - echo Pre Build phase done
   build:
