@@ -13,6 +13,7 @@ phases:
       - echo Entered the pre_build phase...
       - $(aws ecr get-login --no-include-email --region us-east-1)
       - export TAG=$(date "+%m%d%y%H%M")
+      - export REPOSITORY_URI=209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app
     finally:
       - echo Pre Build phase done
   build:
@@ -30,6 +31,10 @@ phases:
       - docker tag codebuild-rails-app:$TAG 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:latest
       - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:latest
       - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"batman-villains","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > imagedefinitions.json
+artifacts:
+    files: imagedefinitions.json
     finally:
       - echo Post Build phase done
 
