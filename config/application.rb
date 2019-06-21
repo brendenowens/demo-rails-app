@@ -29,6 +29,7 @@ module CodebuildRailsApp
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    
 
     client = Aws::SSM::Client.new(region: 'us-east-1', credentials: Aws::InstanceProfileCredentials.new(retries: 3))
     resp = client.get_parameters({
