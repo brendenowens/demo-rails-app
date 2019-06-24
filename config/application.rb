@@ -32,7 +32,8 @@ module CodebuildRailsApp
 
     Aws.config.update({
       region: 'us-east-1',
-      credentials: Aws::InstanceProfileCredentials.new()
+      credentials: Aws::InstanceProfileCredentials.new,
+      log_level: :debug
     })
     client = Aws::SSM::Client.new()
     resp = client.get_parameters({
