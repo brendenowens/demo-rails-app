@@ -10,7 +10,7 @@ phases:
     commands:
       - echo Entered the pre_build phase...
       - $(aws ecr get-login --no-include-email --region us-east-1)
-      - export TAG=$($CODEBUILD_RESOLVED_SOURCE_VERSION)
+      - export TAG=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - export REPOSITORY_URI=209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app
     finally:
       - echo Pre Build phase done
