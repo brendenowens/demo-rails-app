@@ -10,7 +10,7 @@ phases:
     commands:
       - echo Entered the pre_build phase...
       - $(aws ecr get-login --no-include-email --region us-east-1)
-      - export TAG=$(date "+%m%d%y%H%M")
+      - export TAG=$($CODEBUILD_RESOLVED_SOURCE_VERSION)
       - export REPOSITORY_URI=209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app
     finally:
       - echo Pre Build phase done
@@ -19,6 +19,7 @@ phases:
       - echo Entered the build phase...
       - echo Build started on `date`
       - docker build -t codebuild-rails-app:$TAG .
+      - docker run -e AWS_DEFAULT_REGION -e AWS_CONTAINER_CREDENTIALS_RELATIVE_URI --rm codebuild-rails-app:$TAG bundle exec rspec
     finally:
       - echo Build phase done
 
