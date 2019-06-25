@@ -6,7 +6,7 @@ phases:
     commands:
       - echo Entered the install phase...
       - apt-get update -y
-  pre-build:
+  pre_build:
     commands:
       - gem install bundler
   build:
