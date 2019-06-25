@@ -1,5 +1,7 @@
 version: 0.2
-
+env:
+  parameter-store:
+    supersecret: "bowens3-ruby-demo"
 phases:
   install:
     runtime-version:
