@@ -56,4 +56,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'aws-sdk-rails'
-gem 'aws-sdk-ssm', '~> 1'
+gem 'aws-sdk-secretsmanager', '~> 1.28'

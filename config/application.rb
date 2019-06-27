@@ -30,19 +30,5 @@ module CodebuildRailsApp
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    if !ENV.has_key?('supersecret')
-      Aws.config.update({
-        region: 'us-east-1',
-        credentials: Aws::InstanceProfileCredentials.new
-      })
-      client = Aws::SSM::Client.new()
-      resp = client.get_parameters({
-        names: ["bowens3-ruby-demo"],
-        with_decryption: true
-      })
-      resp.parameters.each do |param|
-        ENV[param.name.upcase] = param.value
-      end
-    end
   end
 end

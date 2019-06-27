@@ -19,7 +19,7 @@ phases:
       - echo Entered the build phase...
       - echo Build started on `date`
       - docker build -t codebuild-rails-app:$TAG .
-      - docker run -e AWS_DEFAULT_REGION -e AWS_CONTAINER_CREDENTIALS_RELATIVE_URI --rm codebuild-rails-app:$TAG bundle exec rspec
+      - docker run --rm codebuild-rails-app:$TAG bundle exec rspec
     finally:
       - echo Build phase done
 
