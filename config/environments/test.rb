@@ -43,8 +43,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  if !ENV.has_key?('codebuild')
-    param= JSON.parse(ENV['codebuild'])
+  if !ENV.has_key?('CODEBUILD')
+    param= JSON.parse(ENV['CODEBUILD'])
     ENV[param[:name].upcase] = param[:value]
   else
     client = Aws::SSM::Client.new(region: 'us-east-1')
