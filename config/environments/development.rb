@@ -58,4 +58,16 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  Aws.config.update({
+    region: 'us-east-1',
+    credentials: Aws::InstanceProfileCredentials.new()
+    })
+    client = Aws::SSM::Client.new()
+    resp = client.get_parameters({
+      names: ["bowens3-ruby-demo"],
+      with_decryption: true
+    })
+    resp.parameters.each do |param|
+      ENV[param.name.upcase] = param.value
+    end
 end
