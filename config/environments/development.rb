@@ -60,7 +60,10 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   if ENV.has_key?('CODEBUILD')
     param= JSON.parse(ENV['CODEBUILD'])
-    ENV[param[:name].upcase] = param[:value]
+    param.each do |key,value|
+      ENV[key.upcase] = value
+    end
+
   else
     client = Aws::SSM::Client.new(region: 'us-east-1')
     resp = client.get_parameters({
