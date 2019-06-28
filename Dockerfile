@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 ADD . /app
 
-RUN gem install bundler && bundle install && bundle exec rake db:create db:migrate db:seed && bundle exec rake db:migrate RAILS_ENV=test
+RUN gem install bundler && bundle install && bundle exec rake db:create db:migrate
 
 # Expose port 3000 to the Docker host, so we can access it 
 # from the outside.

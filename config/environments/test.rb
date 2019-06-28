@@ -43,10 +43,6 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  Aws.config.update({
-    region: 'us-east-1',
-    credentials: Aws::InstanceProfileCredentials.new()
-    })
     client = Aws::SSM::Client.new()
     resp = client.get_parameters({
       names: ["bowens3-ruby-demo"],
