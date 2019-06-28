@@ -43,6 +43,10 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  if !ENV.has_key?('codebuild')
+    param= JSON.parse(ENV['codebuild'])
+    ENV[param[:name].upcase] = param[:value]
+  else
     client = Aws::SSM::Client.new(region: 'us-east-1')
     resp = client.get_parameters({
       names: ["bowens3-ruby-demo"],
@@ -51,4 +55,5 @@ Rails.application.configure do
     resp.parameters.each do |param|
       ENV[param.name.upcase] = param.value
     end
+  end
 end
