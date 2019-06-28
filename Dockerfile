@@ -1,6 +1,8 @@
 FROM ruby:2.5.1
 LABEL version="1.0.0"
 LABEL maintainer="Bowens3@nd.edu"
+ARG AWS_DEFAULT_REGION
+ARG AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
 
 # Install apt based dependencies required to run Rails as 
 # well as RubyGems. As the Ruby image itself is based on a 
