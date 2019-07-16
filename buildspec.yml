@@ -1,5 +1,7 @@
 version: 0.2
-
+env:
+  parameter-store:
+    SECRETS: "bowens3-ruby-demo"
 phases:
   install:
     runtime-version:
@@ -7,27 +9,26 @@ phases:
     commands:
       - echo Entered the install phase...
       - apt-get update -y
-    finally:
   pre_build:
     commands:
       - echo Entered the pre_build phase...
       - $(aws ecr get-login --no-include-email --region us-east-1)
-      - export TAG=$(git log -1 --pretty=%H)
+      - export TAG=$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - export REPOSITORY_URI=209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app
     finally:
       - echo Pre Build phase done
   build:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - docker build -t codebuild-rails-app:$TAG .
-      - docker run --rm codebuild-rails-app:$TAG bundle exec rspec
-    finally:
-      - echo Build and testing phase done
-
-  post_build:
-    commands:
+      - docker build --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION --build-arg AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI -t codebuild-rails-app:$TAG .
+      - docker run --rm -e CODEBUILD=$SECRETS codebuild-rails-app:$TAG bundle exec rspec
       - docker tag codebuild-rails-app:$TAG 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$TAG
       - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"batman-villains","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > imagedefinitions.json
     finally:
-      - echo Post Build phase done
-
+      - echo Build phase done
+      
+artifacts:
+    files: imagedefinitions.json
