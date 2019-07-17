@@ -32,6 +32,3 @@ phases:
       
 artifacts:
     files: imagedefinitions.json
-    finally:
-      - echo Post Build phase done
-
