@@ -21,6 +21,8 @@ phases:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
+      - echo $CODEBUILD_WEBHOOK_TRIGGER
+      - echo $CODEBUILD_WEBHOOK_HEAD_REF
       - docker build --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION --build-arg AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI -t codebuild-rails-app:$TAG .
       - docker run --rm -e CODEBUILD=$SECRETS codebuild-rails-app:$TAG bundle exec rspec
       - docker tag codebuild-rails-app:$TAG 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$TAG
