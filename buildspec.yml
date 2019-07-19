@@ -30,7 +30,7 @@ phases:
       - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$(git branch --show-current)
       - if [ -n $GIT_TAG ]; then docker tag codebuild-rails-app:$COMMIT_TAG 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$GIT_TAG; docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$GIT_TAG; fi
       - echo Writing image definitions file...
-      - printf '[{"name":"batman-villains","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > imagedefinitions.json
+      - printf '[{"name":"batman-villains","imageUri":"%s"}]' $REPOSITORY_URI:$COMMIT_TAG > imagedefinitions.json
     finally:
       - echo Build phase done
       
