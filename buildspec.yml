@@ -14,8 +14,8 @@ phases:
       - echo Entered the pre_build phase...
       - $(aws ecr get-login --no-include-email --region us-east-1)
       - export COMMIT_TAG=$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - export GIT_TAG=$(git tag -l --points-at HEAD)
-      - export GIT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
+      - export GIT_TAG=$(git tag -l --points-at $COMMIT_TAG)
+      - export GIT_BRANCH=$(git branch -a --contains $COMMIT_TAG | sed -n 2p)
       - export REPOSITORY_URI=209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app
     finally:
       - echo Pre Build phase done
