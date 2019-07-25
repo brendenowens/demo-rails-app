@@ -23,7 +23,7 @@ phases:
       - echo Entered the build phase...
       - echo Build started on `date`
       - docker build --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION --build-arg AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI -t codebuild-rails-app:$BRANCH .
-      - docker run --rm -e CODEBUILD=$SECRETS codebuild-rails-app:$BRANCH bundle exec rspec
+      - if [ $BRANCH == "dev" ]; then docker run --rm -e CODEBUILD=$SECRETS codebuild-rails-app:$BRANCH bundle exec rspec; fi
       - docker tag codebuild-rails-app:$BRANCH 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$BRANCH
       - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$BRANCH
       - if [ ! -z ${GIT_TAG-x} ]; then docker tag codebuild-rails-app:$BRANCH 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$GIT_TAG; docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$GIT_TAG; fi
