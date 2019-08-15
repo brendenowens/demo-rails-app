@@ -15,6 +15,7 @@ WORKDIR /app
 ADD . /app
 
 RUN gem install bundler && bundle install && bundle exec rake db:create db:migrate db:seed && bundle exec rake db:migrate db:seed RAILS_ENV=test
+RUN bundle exec rake db:create db:migrate db:seed RAILS_ENV=production
 
 
 # Expose port 3000 to the Docker host, so we can access it 
