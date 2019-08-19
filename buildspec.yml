@@ -2,6 +2,7 @@ version: 0.2
 env:
   parameter-store:
     SECRETS: "bowens3-ruby-demo"
+    SECRET_KEY_BASE: "bowens3-key-base"
 phases:
   install:
     runtime-version:
