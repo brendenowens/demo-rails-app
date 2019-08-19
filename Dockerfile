@@ -15,6 +15,7 @@ WORKDIR /app
 ADD . /app
 
 RUN gem install bundler && bundle install && bundle exec rake db:create db:migrate db:seed && bundle exec rake db:migrate db:seed RAILS_ENV=test
+RUN EDITOR="subl --wait" rails credentials:edit
 RUN bundle exec rake db:create db:migrate db:seed RAILS_ENV=production
 
 
