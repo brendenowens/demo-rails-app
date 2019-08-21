@@ -19,7 +19,7 @@ phases:
       - REPOSITORY_URI=209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app
       - export GIT_TAG
       - export BRANCH 
-      - export $REPOSITORY_URI
+      - export REPOSITORY_URI
     finally:
       - echo Pre Build phase done
   build:
