@@ -14,9 +14,12 @@ phases:
     commands:
       - echo Entered the pre_build phase...
       - $(aws ecr get-login --no-include-email --region us-east-1)
-      - export GIT_TAG=$(git tag -l --points-at $CODEBUILD_RESOLVED_SOURCE_VERSION)
-      - export BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER |cut -d"/" -f2)
-      - export REPOSITORY_URI=209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app
+      - GIT_TAG=$(git tag -l --points-at $CODEBUILD_RESOLVED_SOURCE_VERSION)
+      - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER |cut -d"/" -f2)
+      - REPOSITORY_URI=209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app
+      - export GIT_TAG
+      - export BRANCH 
+      - export $REPOSITORY_URI
     finally:
       - echo Pre Build phase done
   build:
