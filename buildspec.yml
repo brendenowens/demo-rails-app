@@ -2,7 +2,6 @@ version: 0.2
 env:
   parameter-store:
     SECRETS: "bowens3-ruby-demo"
-    SECRET_KEY: "bowens3-key-base"
 phases:
   install:
     runtime-version:
@@ -23,7 +22,7 @@ phases:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - docker build --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION --build-arg AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI --build-arg RAILS_MASTER_KEY=$SECRET_KEY -t codebuild-rails-app:$BRANCH .
+      - docker build --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION --build-arg AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI -t codebuild-rails-app:$BRANCH .
       - if [ $BRANCH == "dev" ]; then docker run --rm -e CODEBUILD=$SECRETS codebuild-rails-app:$BRANCH bundle exec rspec; fi
       - docker tag codebuild-rails-app:$BRANCH 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$BRANCH
       - docker push 209773529123.dkr.ecr.us-east-1.amazonaws.com/codebuild-rails-app:$BRANCH

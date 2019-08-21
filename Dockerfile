@@ -3,7 +3,6 @@ LABEL version="1.0.0"
 LABEL maintainer="Bowens3@nd.edu"
 ARG AWS_DEFAULT_REGION
 ARG AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
-ARG RAILS_MASTER_KEY
 
 # Install apt based dependencies required to run Rails as 
 # well as RubyGems. As the Ruby image itself is based on a 
@@ -16,8 +15,6 @@ WORKDIR /app
 ADD . /app
 
 RUN gem install bundler && bundle install && bundle exec rake db:create db:migrate db:seed && bundle exec rake db:migrate db:seed RAILS_ENV=test
-
-RUN EDITOR="vi --wait" rails credentials:edit
 RUN bundle exec rake db:create db:migrate db:seed RAILS_ENV=production
 
 
