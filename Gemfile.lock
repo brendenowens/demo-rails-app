@@ -43,27 +43,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
-    aws-eventstream (1.0.3)
-    aws-partitions (1.203.0)
-    aws-sdk-core (3.63.0)
-      aws-eventstream (~> 1.0, >= 1.0.2)
-      aws-partitions (~> 1.0)
-      aws-sigv4 (~> 1.1)
-      jmespath (~> 1.0)
-    aws-sdk-rails (2.1.0)
-      aws-sdk-ses (~> 1)
-      railties (>= 3)
-    aws-sdk-secretsmanager (1.31.0)
-      aws-sdk-core (~> 3, >= 3.61.1)
-      aws-sigv4 (~> 1.1)
-    aws-sdk-ses (1.25.0)
-      aws-sdk-core (~> 3, >= 3.61.1)
-      aws-sigv4 (~> 1.1)
-    aws-sdk-ssm (1.54.0)
-      aws-sdk-core (~> 3, >= 3.61.1)
-      aws-sigv4 (~> 1.1)
-    aws-sigv4 (1.1.0)
-      aws-eventstream (~> 1.0, >= 1.0.2)
     bindex (0.7.0)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
@@ -89,7 +68,6 @@ GEM
     jbuilder (2.8.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
-    jmespath (1.4.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -208,9 +186,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk-rails
-  aws-sdk-secretsmanager (~> 1.28)
-  aws-sdk-ssm
   bootsnap (>= 1.1.0)
   byebug
   coffee-rails (~> 4.2)
